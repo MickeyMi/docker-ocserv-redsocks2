@@ -12,7 +12,7 @@ RUN echo "Asia/Shanghai" > /etc/timezone
 
 # install compiler, dependencies, tools , dnsmasq
 RUN apt-get update && apt-get install -y \
-    build-essential wget xz-utils libgnutls28-dev \
+    build-essential wget xz-utils libgnutls28-dev autoconf automake libtool libffi-dev \
     libev-dev libwrap0-dev libpam0g-dev libseccomp-dev libreadline-dev \
     libnl-route-3-dev libkrb5-dev liboath-dev libtalloc-dev \
     libhttp-parser-dev libpcl1-dev libopts25-dev autogen pkg-config nettle-dev \
@@ -44,9 +44,10 @@ RUN mkdir -p /temp && cd /temp \
     && wget https://github.com/openconnect/ocserv/archive/ocserv_0_12_1.tar.gz \
     && tar zxvf ocserv_0_12_1.tar.gz \
     && cd ocserv-ocserv_0_12_1 \
-    && ./configure --prefix=/usr --sysconfdir=/etc --with-local-talloc \
-    && make && make install \
-    && cd / && rm -rf /temp
+    && chmod a+x ./autogen.sh \
+    && ./autogen.sh
+    # && make && make install \
+    # && cd / && rm -rf /temp
 
 # generate sll keys
 RUN cd /opt/certs && ls \
