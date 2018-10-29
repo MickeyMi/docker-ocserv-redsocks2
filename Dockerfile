@@ -41,11 +41,9 @@ RUN mkdir -p /temp && cd /temp \
 
 # configuration ocserv
 RUN mkdir -p /temp && cd /temp \
-    && wget https://ocserv.gitlab.io/www/download.html \
-    && export ocserv_version=$(cat download.html | grep -o '[0-9]*\.[0-9]*\.[0-9]*') \
-    && wget ftp://ftp.infradead.org/pub/ocserv/ocserv-$ocserv_version.tar.xz \
-    && tar xvf ocserv-$ocserv_version.tar.xz \
-    && cd ocserv-$ocserv_version \
+    && wget https://github.com/openconnect/ocserv/archive/ocserv_0_12_1.tar.gz \
+    && tar zxvf ocserv_0_12_1.tar.gz \
+    && cd ocserv-ocserv_0_12_1 \
     && ./configure --prefix=/usr --sysconfdir=/etc --with-local-talloc \
     && make && make install \
     && cd / && rm -rf /temp
